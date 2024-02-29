@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+/* to prevent auto style drift  */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+input[data-autocompleted] {
+  background-color: transparent !important;
+}
+
+@layer components {
+  .heading-m {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 150%;
+  }
+  .heading-s {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 150%;
+  }
+  .body-m {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+  }
+  .body-s {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
