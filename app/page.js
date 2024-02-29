@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import { TextField } from "@/components/Input";
+import Tab from "@/components/Tab";
 export default function Home() {
   return (
     <main className="p-10">
@@ -11,6 +12,8 @@ export default function Home() {
           inputName="name"
           placeholder="name"
         />
+        <Tab />
+        <Tab />
       </div>
     </main>
   );
