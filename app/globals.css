@@ -16,6 +16,27 @@ input[data-autocompleted] {
   background-color: transparent !important;
 }
 
+div.ant-select-open {
+  outline: #6330ff !important;
+  border-color: #6330ff !important;
+  box-shadow: 0.5px 0.5px 5px rgba(90, 60, 255, 0.7) !important;
+}
+
+div.ant-select-open + div {
+  outline: #6330ff !important;
+  border-color: #6330ff !important;
+  box-shadow: 0.5px 0.5px 5px rgba(90, 60, 255, 0.7) !important;
+}
+
+div.ant-select-open > * {
+  outline: #6330ff !important;
+  border-color: #6330ff !important;
+}
+
+.ant-select-arrow {
+  color: #6330ff !important;
+}
+
 @layer components {
   .heading-m {
     font-weight: bold;
