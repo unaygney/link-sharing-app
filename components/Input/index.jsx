@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState } from "react";
+import UploadImage from "./icon-upload-image.svg";
 export const TextField = ({
   labelTag,
   inputType = "text",
@@ -45,6 +45,50 @@ export const TextField = ({
           <p className="body-s text-red">Please check again</p>
         </div> */}
       </div>
+    </div>
+  );
+};
+
+export const FileInput = () => {
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="file"
+        id="fileInput"
+        className="absolute w-full h-full opacity-0"
+        onChange={handleFileChange}
+      />
+      <button
+        className={`w-[193px]  h-[193px] bg-light-purple   rounded ${
+          previewImage ? "text-white" : "text-purple"
+        }`}
+        style={{
+          backgroundImage: `url(${previewImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="flex flex-col items-center justify-center gap-4 w-full h-full relative">
+          <UploadImage />
+          <div> {previewImage ? "Change Image" : "+ Upload Image"}</div>
+          {previewImage && (
+            <div className="absolute inset-0 bg-black opacity-50 rounded z-10"></div>
+          )}
+        </div>
+      </button>
     </div>
   );
 };
