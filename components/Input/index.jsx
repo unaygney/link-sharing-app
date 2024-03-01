@@ -64,7 +64,7 @@ export const FileInput = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <input
         type="file"
         id="fileInput"
@@ -72,8 +72,8 @@ export const FileInput = () => {
         onChange={handleFileChange}
       />
       <button
-        className={`w-[193px]  h-[193px] bg-light-purple   rounded ${
-          previewImage ? "text-white" : "text-purple"
+        className={`w-[193px]  h-[193px] bg-light-purple cursor-pointer  rounded ${
+          previewImage ? "text-white    " : "text-purple"
         }`}
         style={{
           backgroundImage: `url(${previewImage})`,
@@ -81,11 +81,13 @@ export const FileInput = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="flex flex-col items-center justify-center gap-4 w-full h-full relative">
-          <UploadImage />
-          <div> {previewImage ? "Change Image" : "+ Upload Image"}</div>
+        <div className="flex flex-col items-center justify-center gap-4 w-full h-full  relative  ">
+          <div className="z-20  flex flex-col justify-center items-center ">
+            <UploadImage />
+            {previewImage ? "Change Image" : "+ Upload Image"}
+          </div>
           {previewImage && (
-            <div className="absolute inset-0 bg-black opacity-50 rounded z-10"></div>
+            <div className="absolute inset-0 bg-black opacity-70 rounded z-10"></div>
           )}
         </div>
       </button>
