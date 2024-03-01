@@ -9,7 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={mainFont.className}>{children}</body>
+      <body className={`${mainFont.className} antialiased scroll-smooth`}>
+        {children}
+      </body>
     </html>
   );
 }
