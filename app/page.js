@@ -1,7 +1,12 @@
+"use client";
 import Button from "@/components/Button";
-import { TextField } from "@/components/Input";
+import { Select } from "antd";
+import { FileInput, TextField } from "@/components/Input";
 import Tab from "@/components/Tab";
 export default function Home() {
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
   return (
     <main className="p-10">
       <div className="flex flex-col gap-10 max-w-[300px]">
@@ -14,6 +19,20 @@ export default function Home() {
         />
         <Tab />
         <Tab />
+
+        <Select
+          defaultValue="lucy"
+          className="w-[400px] h-10"
+          onChange={handleChange}
+          options={[
+            { value: "jack", label: "Jack" },
+            { value: "lucy", label: "Lucy" },
+            { value: "Yiminghe", label: "yiminghe" },
+            { value: "disabled", label: "Disabled", disabled: true },
+          ]}
+        />
+
+        <FileInput />
       </div>
     </main>
   );
