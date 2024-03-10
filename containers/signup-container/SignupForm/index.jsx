@@ -15,7 +15,6 @@ function SignupForm() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchemaCreateuser) });
   const onSubmit = (data) => console.log(data);
-  console.log({ errors });
   return (
     <div className="bg-white md:p-10 rounded-lg md:w-[476px]">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -29,11 +28,10 @@ function SignupForm() {
           {FORM_DATA.map((item) => (
             <div key={item.id} className="relative flex flex-col gap-1 ">
               <label
-                className="body-s"
                 htmlFor={item.name}
                 className={`${
                   errors[item.name]?.message ? "text-red" : "text-dark-gray"
-                }`}
+                } body-s `}
               >
                 {item.label}
               </label>
@@ -73,10 +71,6 @@ function SignupForm() {
                     </p>
                   </div>
                 )}
-
-                {/* <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                    <p className="body-s text-red">Please check again</p>
-                  </div> */}
               </div>
             </div>
           ))}
