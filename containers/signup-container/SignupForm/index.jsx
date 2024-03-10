@@ -14,7 +14,18 @@ function SignupForm() {
     watch,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchemaCreateuser) });
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    const response = await fetch("/api/create-user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const { message } = await response.json();
+    console.log(message);
+  };
   return (
     <div className="bg-white md:p-10 rounded-lg md:w-[476px]">
       <form onSubmit={handleSubmit(onSubmit)}>
