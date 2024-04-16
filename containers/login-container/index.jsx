@@ -1,18 +1,15 @@
 import React from "react";
-import SignupForm from "./SignupForm";
+import LoginForm from "./login-form";
 import Logo from "@/public/logo-devlinks-large.svg";
-
-function SignupContainer() {
+export default function LoginContainer() {
   return (
     <main className="w-full h-full md:bg-light-gray md:shadow-md">
       <div className="w-full h-full flex-col flex  justify-center items-center  gap-10 p-8 ">
         <div className="mb-6">
           <Logo />
         </div>
-        <SignupForm />
+        <LoginForm />
       </div>
     </main>
   );
 }
-
-export default SignupContainer;
