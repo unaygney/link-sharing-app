@@ -11,6 +11,21 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    name: {
+      type: String,
+      required: [false],
+      default: null,
+    },
+    lastName: {
+      type: String,
+      required: [false],
+      default: null,
+    },
+    profileImgUrl: {
+      type: String,
+      required: [false],
+      default: null,
+    },
   },
   {
     timestamps: true,
