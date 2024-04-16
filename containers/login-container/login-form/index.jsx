@@ -7,6 +7,9 @@ import Image from "next/image";
 import { validationSchemaLoginUser } from "@/utils/validation";
 import Button from "@/components/Button";
 import Link from "next/link";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 export default function LoginForm() {
   const {
     register,
@@ -14,20 +17,60 @@ export default function LoginForm() {
     watch,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchemaLoginUser) });
-
+  const router = useRouter();
   const onSubmit = async (data) => {
-    // const response = await fetch("/api/create-user", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-    // const { message } = await response.json();
-    // console.log(message);
+    try {
+      const response = await fetch("/api/login-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+
+      if (response.status === 200) {
+        await toast.success(res.message, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
+      } else {
+        await toast.error(res.message, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      await toast.error(error.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
   return (
     <div className="bg-white md:p-10 rounded-lg md:w-[476px]">
+      <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-10">
           <h1 className="text-2xl leading-[150%] font-bold ">Login</h1>
@@ -89,7 +132,7 @@ export default function LoginForm() {
           <p className="body-s">Password must contain at least 8 characters</p>
           <Button
             className="heading-s"
-            title="Create new account"
+            title="Login"
             variant="primary"
             type="submit"
           />
