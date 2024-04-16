@@ -1,5 +1,4 @@
-"use client";
 import React from "react";
-export default function HomeContainer({ users }) {
-  return <div>{users.email}</div>;
+export default function HomeContainer() {
+  return <div>home container</div>;
 }
