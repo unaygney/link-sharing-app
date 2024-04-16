@@ -11,7 +11,7 @@ export default async function connectDB() {
 
   // connect to MongoDb
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.NEXT_APP_MONGO_URI);
     connected = true;
     console.log("MongoDB connected...");
   } catch (err) {
