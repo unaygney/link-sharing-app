@@ -1,3 +1,4 @@
-export default function Home() {
-  return <main className="p-10">deneme</main>;
+import HomeContainer from "@/containers/home-container";
+export default async function Home() {
+  return <HomeContainer />;
 }
