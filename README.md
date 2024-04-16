@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Mentor - Link-sharing app solution
 
-## Getting Started
+This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### The challenge
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Users should be able to:
 
-## Learn More
+- Create, read, update, delete links and see previews in the mobile mockup
+- Receive validations if the links form is submitted without a URL or with the wrong URL pattern for the platform
+- Drag and drop links to reorder them
+- Add profile details like profile picture, first name, last name, and email
+- Receive validations if the profile details form is saved with no first or last name
+- Preview their devlinks profile and copy the link to their clipboard
+- View the optimal layout for the interface depending on their device's screen size
+- See hover and focus states for all interactive elements on the page
+- **Bonus**: Save details to a database (build the project as a full-stack app)
+- **Bonus**: Create an account and log in (add user authentication to the full-stack app)
 
-To learn more about Next.js, take a look at the following resources:
+### Links
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Live Site URL: [live site URL here](https://link-sharing-app-lovat.vercel.app/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## My process
 
-## Deploy on Vercel
+### Built with
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [React](https://reactjs.org/) - JS library
+- [Next.js](https://nextjs.org/) - React framework
+- [Tailwind CSS](https://tailwindcss.com) - For styles
+- [Mongo DB](https://www.mongodb.com/) - For Database
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Author
+
+- Website - [Guney Unay](https://guneyunay.com/)
+- Frontend Mentor - [@unaygney](https://www.frontendmentor.io/profile/unaygney)
