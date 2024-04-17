@@ -1,0 +1,11 @@
+{
+    "functions": {
+      "api/create-user/route.js": {
+        "maxDuration": 15
+      },
+      "api/login-user/route.js": {
+        "maxDuration": 15
+      }
+    }
+  }
+  
