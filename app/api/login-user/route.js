@@ -5,12 +5,10 @@ import bcryptjs from "bcryptjs";
 import { SignJWT } from "jose";
 import { getJwtSecretKey } from "@/utils/auth";
 
-connectDB();
-
 export async function POST(request) {
   try {
     const { email, password } = await request.json();
-
+    await connectDB();
     //check if all fields are filled
     if (!email || !password) {
       return NextResponse.json(

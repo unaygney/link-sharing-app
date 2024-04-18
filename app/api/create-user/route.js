@@ -3,11 +3,10 @@ import bcryptjs from "bcryptjs";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 
-connectDB();
-
 export async function POST(request) {
   try {
     const { email, password, rePassword } = await request.json();
+    await connectDB();
 
     // check if all fields are filled
 
