@@ -26,6 +26,18 @@ const UserSchema = new Schema(
       required: [false],
       default: null,
     },
+    links: [
+      {
+        url: {
+          type: String,
+          required: [true, "URL is required"],
+        },
+        title: {
+          type: String,
+          required: [true, "Title is required"],
+        },
+      },
+    ],
   },
   {
     timestamps: true,
