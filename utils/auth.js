@@ -10,12 +10,21 @@ export const getJwtSecretKey = () => {
 };
 
 export async function verifyJwtToken(token) {
-  return new Promise((resolve, reject) => {
-    jwtVerify(token, process.env.NEXT_APP_SECRET_KEY, (err, decodedToken) => {
-      if (err || !decodedToken) {
-        return reject(err);
-      }
-      resolve(decodedToken);
+  const key = getJwtSecretKey();
+
+  try {
+    const { payload } = await jwtVerify(token, key, {
+      algorithms: ["HS256"],
     });
-  });
+    return payload;
+  } catch (error) {
+    console.error("Token verification failed:", error);
+    return null;
+  }
 }
+
+export const isAuthPages = (url) => {
+  const AUTH_PAGES = ["/login", "/signup"];
+
+  return AUTH_PAGES.some((page) => page.startsWith(url));
+};
