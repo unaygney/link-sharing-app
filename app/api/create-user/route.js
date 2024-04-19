@@ -24,13 +24,26 @@ export async function POST(request) {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
+
+    // check if user already exists
+    const user = await User.findOne({ email });
+    if (user) {
+      const response = NextResponse.json(
+        {
+          message: "User already exists",
+          success: false,
+        },
+        { status: 409 }
+      );
+      return response;
+    }
     // add password hashing
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     // add user to database
     const newUser = new User({ email, password: hashedPassword });
-    const savedUser = await newUser.save();
+    await newUser.save();
 
     // return success response
     return NextResponse.json({
