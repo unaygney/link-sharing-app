@@ -4,7 +4,7 @@ import TabsMenu from "./tabs-menu";
 import PreviewButton from "./preview-button";
 export default function Header() {
   return (
-    <header className="flex items-center justify-between px-6 py-4">
+    <header className="flex items-center justify-between px-6 py-4 bg-white rounded-b-xl md:m-6">
       <LogoSmall />
       <TabsMenu />
       <PreviewButton />
