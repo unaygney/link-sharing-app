@@ -14,7 +14,7 @@ export default function Button({
       onClick={onClick}
       {...rest}
       className={clsx(
-        "min-w-[227px] h-[46px] flex items-center justify-center rounded-lg transition-colors delay-150 heading-s",
+        "min-w-[227px] capitalize h-[46px] flex items-center justify-center rounded-lg transition-colors delay-150 heading-s",
         variant === "primary" &&
           "bg-purple text-white hover:bg-light-purple disabled:bg-very-light-purple disabled:pointer-events-none",
         variant === "secondary" &&

@@ -66,11 +66,11 @@ export const FileInput = () => {
       <input
         type="file"
         id="fileInput"
-        className="absolute w-full h-full opacity-0"
+        className="absolute w-full h-full opacity-0 z-10"
         onChange={handleFileChange}
       />
       <button
-        className={`w-[193px]  h-[193px] bg-light-purple cursor-pointer  rounded ${
+        className={`w-[193px]  h-[193px] bg-very-light-purple cursor-pointer  rounded ${
           previewImage ? "text-white    " : "text-purple"
         }`}
         style={{

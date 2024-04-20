@@ -6,7 +6,6 @@ import { useTabsContext } from "../../context/tabsContext";
 import clsx from "clsx";
 export default function TabsMenu() {
   const { activeTab, setActiveTab } = useTabsContext();
-  console.log(activeTab);
   return (
     <div className="w-[148px] md:w-[309px] lg:w-[325px] lg:gap-4 md:h-[46px] h-[42px]  flex">
       <button

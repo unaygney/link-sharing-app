@@ -29,7 +29,6 @@ function SignupForm() {
         body: JSON.stringify(data),
       });
       const res = await response.json();
-      console.log(response);
       if (response.status === 200) {
         await toast.success(res.message, {
           position: "top-right",
