@@ -1,4 +1,9 @@
 import React from "react";
+import Header from "./header";
 export default function HomeContainer() {
-  return <div>home page</div>;
+  return (
+    <main>
+      <Header />
+    </main>
+  );
 }
