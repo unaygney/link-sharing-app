@@ -22,10 +22,10 @@ export default function Form() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-6 mt-4"
+      className="flex flex-col gap-6 mt-4 "
     >
-      <div className="p-5 flex flex-col gap-4 bg-light-gray rounded-xl">
-        <h5 className="text-base font-normal text-dark-gray ">
+      <div className="p-5 flex flex-col md:flex-row md:items-center gap-4 bg-light-gray rounded-xl">
+        <h5 className="text-base font-normal text-dark-gray md:w-[240px] ">
           Profile picture
         </h5>
         <div className="relative">
@@ -47,17 +47,17 @@ export default function Form() {
           </button>
         </div>
 
-        <p className="text-xs font-normal text-dark-gray">
+        <p className="text-xs font-normal text-dark-gray md:ml-2">
           Image must be below 1024x1024px.Use PNG or JPG format.
         </p>
       </div>
 
       <div className="p-5 flex flex-col gap-4 bg-light-gray rounded-xl">
         {FORM_INPUTS.map((input) => (
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-1 relative">
             <label
               htmlFor={input.name}
-              className="text-xs font-normal text-custom-black"
+              className="text-xs md:text-base font-normal text-dark-gray"
             >
               {input.placeholder}
             </label>
@@ -67,17 +67,24 @@ export default function Form() {
               id={input.name}
               name={input.name}
               placeholder={input.placeholder}
-              className="w-full h-12 p-4 bg-white border border-gray rounded-lg"
+              className="w-full md:w-[344px] h-12 p-4 bg-white border border-gray rounded-lg relative"
             />
             {errors[input.name] && (
-              <span className="text-xs text-red">This field is required</span>
+              <span className="text-xs text-red absolute right-4 top-1/2 -translate-y-1/2">
+                This field is required
+              </span>
             )}
           </div>
         ))}
       </div>
 
       <hr className="w-full text-gray" />
-      <Button type="submit" title="save" variant="primary" />
+      <Button
+        type="submit"
+        title="save"
+        variant="primary"
+        className="xl:w-[91px] xl:ml-auto"
+      />
     </form>
   );
 }
