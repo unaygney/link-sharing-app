@@ -1,29 +1,80 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import UploadImage from "@/public/icon-upload-image.svg";
 import { FORM_INPUTS } from "./constant";
 import Button from "@/components/Button";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
 export default function Form() {
+  const router = useRouter();
+  const [previewImage, setPreviewImage] = useState(null);
+  const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (data[key] !== file) {
+        formData.append(key, data[key]);
+      }
+    }
+    if (file) {
+      formData.append("profilePicture", file);
+    }
+
+    const response = await fetch("/api/user-upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      const result = await response.json();
+      toast.success(result.message);
+    } else if (response.status === 401) {
+      const result = await response.json();
+      toast.error(result.message);
+      router.push("/login");
+    }
   };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    const fileTypes = ["image/jpeg", "image/png"];
+    if (selectedFile) {
+      if (!fileTypes.includes(selectedFile.type)) {
+        toast.error("Only JPG and PNG files are allowed.");
+        return;
+      }
+      setFile(selectedFile);
+      setValue("profilePicture", selectedFile);
+      const fileURL = URL.createObjectURL(selectedFile);
+      setPreviewImage(fileURL);
+    }
+  };
+
   const handleFileButtonClick = () => {
     fileInputRef.current.click(); // This will open the file input
   };
 
   return (
     <form
+      encType="multipart/form-data"
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-6 mt-4 "
     >
+      <ToastContainer />
       <div className="p-5 flex flex-col md:flex-row md:items-center gap-4 bg-light-gray rounded-xl">
         <h5 className="text-base font-normal text-dark-gray md:w-[240px] ">
           Profile picture
@@ -32,17 +83,38 @@ export default function Form() {
           <input
             {...register("profilePicture")}
             type="file"
+            id="fileInput"
+            onChange={handleFileChange}
             hidden
             ref={fileInputRef}
+            accept="image/png, image/jpeg"
           />
           <button
             type="button"
             onClick={handleFileButtonClick}
             className="w-[193px] h-[193px] inline-flex items-center justify-center rounded-xl bg-very-light-purple"
+            style={{
+              backgroundImage: previewImage
+                ? `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${previewImage})`
+                : "none",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
           >
-            <div className="flex flex-col items-center gap-2 text-purple">
+            <div
+              className={clsx(
+                "flex flex-col items-center gap-2 ",
+                {
+                  "text-white": previewImage !== null,
+                },
+                { "text-purple": previewImage === null }
+              )}
+            >
               <UploadImage />
-              <p className="text-base font-semibold ">+Upload Image</p>
+              <p className="text-base font-semibold  ">
+                {previewImage ? "Change Image" : "+Upload Image"}
+              </p>
             </div>
           </button>
         </div>
