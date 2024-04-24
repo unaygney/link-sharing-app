@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 function SignupForm() {
+  const [loading, setLodaing] = React.useState(false);
   const router = useRouter();
   const {
     register,
@@ -21,6 +22,7 @@ function SignupForm() {
 
   const onSubmit = async (data) => {
     try {
+      setLodaing(true);
       const response = await fetch("/api/create-user", {
         method: "POST",
         headers: {
@@ -43,6 +45,7 @@ function SignupForm() {
         setTimeout(() => {
           router.push("/login");
         }, 1500);
+        setLodaing(false);
       } else {
         await toast.error(res.message, {
           position: "top-right",
@@ -54,6 +57,7 @@ function SignupForm() {
           progress: undefined,
           theme: "light",
         });
+        setLodaing(false);
       }
     } catch (error) {
       await toast.error(error.message, {
@@ -66,10 +70,11 @@ function SignupForm() {
         progress: undefined,
         theme: "light",
       });
+      setLodaing(false);
     }
   };
   return (
-    <div className="bg-white md:p-10 rounded-lg md:w-[476px]">
+    <div className="bg-white md:p-10 rounded-lg md:w-[476px] p-4">
       <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-10">
@@ -135,6 +140,7 @@ function SignupForm() {
             title="Create new account"
             variant="primary"
             type="submit"
+            disabled={loading}
           />
         </div>
       </form>

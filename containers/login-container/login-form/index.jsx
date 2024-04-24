@@ -10,7 +10,9 @@ import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { set } from "mongoose";
 export default function LoginForm() {
+  const [loading, setLodaing] = React.useState(false);
   const {
     register,
     handleSubmit,
@@ -20,6 +22,7 @@ export default function LoginForm() {
   const router = useRouter();
   const onSubmit = async (data) => {
     try {
+      setLodaing(true);
       const response = await fetch("/api/login-user", {
         method: "POST",
         headers: {
@@ -43,7 +46,9 @@ export default function LoginForm() {
         setTimeout(() => {
           router.push("/");
         }, 1500);
+        setLodaing(false);
       } else {
+        setLodaing(false);
         await toast.error(res.message, {
           position: "top-right",
           autoClose: 1500,
@@ -66,10 +71,11 @@ export default function LoginForm() {
         progress: undefined,
         theme: "light",
       });
+      setLodaing(false);
     }
   };
   return (
-    <div className="bg-white md:p-10 rounded-lg md:w-[476px]">
+    <div className="bg-white md:p-10 rounded-lg p-4 md:w-[476px]">
       <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-10">
@@ -135,6 +141,7 @@ export default function LoginForm() {
             title="Login"
             variant="primary"
             type="submit"
+            disabled={loading}
           />
         </div>
       </form>
