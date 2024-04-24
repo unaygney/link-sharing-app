@@ -37,15 +37,9 @@ export default function Form() {
       body: formData,
     });
 
-    console.log(response);
-
     if (response.status === 200) {
       const result = await response.json();
       toast.success(result.message);
-    } else if (response.status === 401) {
-      const result = await response.json();
-      toast.error(result.message);
-      router.push("/login");
     }
   };
 
