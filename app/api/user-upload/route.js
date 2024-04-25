@@ -3,12 +3,17 @@ import { verifyJwtToken, getJwtSecretKey } from "@/utils/auth";
 import User from "@/models/userModel";
 import { SignJWT } from "jose";
 import connectDB from "@/config/database";
+import cloudinary from "@/config/cloudinary";
+
 export async function POST(req) {
   const { cookies, url, nextUrl } = req;
   const { value: token } = cookies.get("token") ?? { value: null };
   const { email } = await verifyJwtToken(token, getJwtSecretKey());
   const data = await req.formData();
 
+  console.log(data);
+
+  //connect database
   await connectDB();
 
   // check the user's token is valid?
@@ -27,6 +32,8 @@ export async function POST(req) {
   if (user) {
     const newFirstName = data.get("firstName");
     const newLastName = data.get("lastName");
+    const profilePic = data.get("profilePicture");
+    const newEmail = data.get("email");
 
     if (!newFirstName || !newLastName) {
       const response = NextResponse.json({
@@ -35,15 +42,24 @@ export async function POST(req) {
       return response;
     }
 
-    user.name = newFirstName;
-    user.lastName = newLastName;
-    await user.save();
+    if (profilePic) {
+      const imageBuffer = await profilePic.arrayBuffer();
+      const imageArray = Array.from(new Uint8Array(imageBuffer));
+      const imageData = Buffer.from(imageArray);
+      const imageBase64 = imageData.toString("base64");
 
-    // email update
-    const newEmail = data.get("email");
+      const result = await cloudinary.uploader.upload(
+        `data:image/png;base64,${imageBase64}`,
+        {
+          folder: "link-shared-app",
+        }
+      );
+      user.profileImgUrl = result.secure_url;
+    }
+
     if (newEmail && newEmail !== user.email) {
       user.email = newEmail;
-      await user.save();
+
       // update the token
       const token = await new SignJWT({ email: newEmail })
         .setProtectedHeader({ alg: "HS256" })
@@ -57,20 +73,11 @@ export async function POST(req) {
       response.cookies.set("token", token, { httpOnly: true, path: "/" });
       return response;
     }
-    // res.cookies.set("token", token, { httpOnly: true, path: "/" });
 
-    // if (data.get("profilePic")) {
-    //   const profilePic = data.get("profilePic");
-    //   const reader = profilePic.stream().getReader();
-    //   let chunks = [];
-    //   while (true) {
-    //     const { done, value } = await reader.read();
-    //     if (done) break;
-    //     chunks.push(value);
-    //   }
-    //   const file = new Blob(chunks, { type: profilePic.type });
-    //   user.profilePic = file;
-    // }
+    user.name = newFirstName;
+    user.lastName = newLastName;
+
+    await user.save();
   }
 
   const response = NextResponse.json({ message: "File uploaded successfully" });
