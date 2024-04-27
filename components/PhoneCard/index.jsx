@@ -3,38 +3,28 @@ import { cookies } from "next/headers";
 import User from "@/models/userModel";
 import connectDB from "@/config/database";
 import PhoneMockup from "@/public/illustration-phone-mockup.svg";
-import Image from "next/image";
+import UserCard from "./user-card";
+import UserImage from "./user-image";
+import UserPreviewList from "./user-preview-list";
+
+export const dynamic = "force-dynamic";
+
 export default async function PhoneCard() {
   const cookie = cookies();
   const { value: token } = cookie.get("token") ?? null;
   const { email } = await verifyJwtToken(token);
 
-  connectDB();
+  await connectDB();
   const user = await User.findOne({ email }, { password: 0 });
 
   return (
     <section className="flex-1 xl:flex items-center justify-center bg-white rounded-xl m-4 hidden  2xl:ml-0 p-6">
-      <div className="relative ">
+      <div className="relative  ">
         <PhoneMockup />
-        <div className="absolute inset-0 border flex flex-col items-center  border-red">
-          <div
-            className={`w-[96px] h-[96px] bg-[#eee] mt-[63px] rounded-full relative overflow-hidden ${user.profileImgUrl ? "border-[4px] border-purple" : ""} `}
-          >
-            {user?.profileImgUrl && (
-              <Image
-                src={user.profileImgUrl}
-                alt="User Profile Image"
-                fill
-                className="object-cover"
-              />
-            )}
-          </div>
-          <div className="mt-6 flex flex-col gap-2 text-center">
-            <h3>
-              {user?.name} {user?.lastName}
-            </h3>
-            <p>{user?.email}</p>
-          </div>
+        <div className="absolute  inset-0 flex flex-col items-center  ">
+          <UserImage user={user} />
+          <UserCard user={user} />
+          <UserPreviewList user={user} />
         </div>
       </div>
     </section>

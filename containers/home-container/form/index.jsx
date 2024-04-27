@@ -120,7 +120,10 @@ export default function Form() {
 
       <div className="p-5 flex flex-col gap-4 bg-light-gray rounded-xl">
         {FORM_INPUTS.map((input) => (
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-1 relative">
+          <div
+            key={input.id}
+            className="flex flex-col md:flex-row md:justify-between md:items-center gap-1 relative"
+          >
             <label
               htmlFor={input.name}
               className="text-xs md:text-base font-normal text-dark-gray"
