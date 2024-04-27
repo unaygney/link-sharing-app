@@ -1,5 +1,6 @@
 import { mainFont } from "@/utils/font";
 import "./globals.css";
+import { TabsContextProvider } from "@/containers/home-container/context/tabsContext";
 
 export const metadata = {
   title: "Link Sharing App",
@@ -12,7 +13,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${mainFont.className} antialiased scroll-smooth bg-light-gray`}
       >
-        {children}
+        <TabsContextProvider>{children}</TabsContextProvider>
       </body>
     </html>
   );
