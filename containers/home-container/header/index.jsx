@@ -1,13 +1,15 @@
 import React from "react";
-import TabsMenu from "./tabs-menu";
-import PreviewButton from "./preview-button";
-import Logo from "./logo";
+
 export default function Header() {
   return (
-    <header className="flex items-center justify-between  px-6 py-4 bg-white rounded-b-xl 2xl:mx-0 md:m-6">
-      <Logo />
-      <TabsMenu />
-      <PreviewButton />
-    </header>
+    <div className="flex flex-col gap-2 items-start">
+      <h3 className="text-custom-black text-2xl font-bold">
+        Customize your links
+      </h3>
+      <p className="text-base font-normal text-dark-gray">
+        Add/edit/remove links below and then share all your profiles with the
+        world!
+      </p>
+    </div>
   );
 }
