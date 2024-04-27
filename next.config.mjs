@@ -27,6 +27,17 @@ const nextConfig = {
 
     return config;
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/link-shared/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
