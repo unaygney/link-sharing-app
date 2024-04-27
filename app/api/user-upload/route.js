@@ -16,24 +16,13 @@ export async function POST(req) {
     // Connect to database
     await connectDB();
 
-    // Check if the token is still valid
-    const isValidToken = await verifyJwtToken(token, getJwtSecretKey());
-    if (!isValidToken) {
-      const response = NextResponse.redirect(new URL("/login", url)).json(
-        { message: "Invalid token. Please log in again." },
-        { status: 401 }
-      );
-      response.headers.set("Set-Cookie", "token=; Path=/; Max-Age=0");
-      return response;
-    }
-
     const data = await req.formData();
     const user = await User.findOne({ email });
     if (user) {
       const newFirstName = data.get("firstName");
       const newLastName = data.get("lastName");
       const profilePic = data.get("profilePicture");
-      const newEmail = data.get("email");
+      const newEmail = data.get("email") === "" ? email : data.get("email");
 
       if (!newFirstName || !newLastName) {
         return NextResponse.json({
@@ -41,8 +30,10 @@ export async function POST(req) {
         });
       }
 
+      let userImageData;
+
       // Handling profile picture update
-      if (profilePic) {
+      if (profilePic && profilePic !== "undefined") {
         const imageBuffer = await profilePic.arrayBuffer();
         const imageArray = Array.from(new Uint8Array(imageBuffer));
         const imageData = Buffer.from(imageArray);
@@ -52,30 +43,29 @@ export async function POST(req) {
           `data:image/png;base64,${imageBase64}`,
           { folder: "link-shared-app" }
         );
-        user.profileImgUrl = result.secure_url;
-      }
-
-      // Update email and JWT token if email has changed
-      if (newEmail && newEmail !== user.email) {
-        user.email = newEmail;
-        const newToken = await new SignJWT({ email: newEmail })
-          .setProtectedHeader({ alg: "HS256" })
-          .setIssuedAt()
-          .setExpirationTime("2h")
-          .sign(getJwtSecretKey());
-
-        const response = NextResponse.json({
-          message: "Email updated successfully",
-        });
-        response.cookies.set("token", newToken, { httpOnly: true, path: "/" });
-        return response;
+        userImageData = result.secure_url;
       }
 
       user.name = newFirstName;
       user.lastName = newLastName;
+      user.email = newEmail;
+      userImageData && (user.profileImgUrl = userImageData);
       await user.save();
 
-      return NextResponse.json({ message: "File uploaded successfully" });
+      const response = NextResponse.json(
+        {
+          message: "File uploaded successfully",
+        },
+        { status: 200 }
+      );
+      const newToken = await new SignJWT({ email: newEmail })
+        .setProtectedHeader({ alg: "HS256" })
+        .setIssuedAt()
+        .setExpirationTime("2h")
+        .sign(getJwtSecretKey());
+
+      response.cookies.set("token", newToken, { httpOnly: true, path: "/" });
+      return response;
     }
   } catch (error) {
     console.error("Error handling request:", error);

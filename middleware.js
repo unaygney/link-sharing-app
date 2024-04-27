@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAuthPages, verifyJwtToken } from "./utils/auth";
+
 export async function middleware(req) {
   const { url, cookies, nextUrl } = req;
   const { value: token } = cookies.get("token") ?? { value: null };
@@ -8,7 +9,7 @@ export async function middleware(req) {
   const isAuthPageRequested = isAuthPages(nextUrl.pathname);
 
   // dashboard page (root page) is only accessible to authenticated users
-  if (nextUrl.pathname === "/") {
+  if (nextUrl.pathname === "/" || nextUrl.pathname === "/profile") {
     if (hasVerifyToken) {
       const response = NextResponse.next();
       return response;
@@ -29,5 +30,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/"],
+  matcher: ["/login", "/signup", "/", "/profile"],
 };
