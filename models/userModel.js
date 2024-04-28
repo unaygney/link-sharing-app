@@ -28,13 +28,13 @@ const UserSchema = new Schema(
     },
     links: [
       {
+        platform: {
+          type: String,
+          required: [true, "Title is required"],
+        },
         url: {
           type: String,
           required: [true, "URL is required"],
-        },
-        title: {
-          type: String,
-          required: [true, "Title is required"],
         },
       },
     ],
