@@ -39,7 +39,7 @@ export default function Form() {
 
     if (response.status === 200) {
       const result = await response.json();
-      toast.success(result.message);
+      toast.success("Your changes have been successfully saved!");
       router.refresh();
     }
   };

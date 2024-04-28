@@ -10,6 +10,7 @@ export default function HomeContainer() {
         <PhoneCard />
         <div className="flex flex-col w-full bg-white m-4 2xl:mr-0 rounded-xl 2xl:ml-0 p-6 xl:flex-1  ">
           <Header />
+          <Form />
         </div>
       </section>
     </main>

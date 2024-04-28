@@ -10,7 +10,9 @@ body {
 /* to prevent auto style drift  */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  transition: background-color 600000s 0s, color 600000s 0s;
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
 }
 input[data-autocompleted] {
   background-color: transparent !important;
@@ -64,4 +66,17 @@ div.ant-select-open > * {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* hide scrollbar */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroolbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
