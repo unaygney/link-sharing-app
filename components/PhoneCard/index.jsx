@@ -18,7 +18,7 @@ export default async function PhoneCard() {
   const user = await User.findOne({ email }, { password: 0 });
 
   return (
-    <section className="flex-1 xl:flex items-center justify-center bg-white rounded-xl m-4 hidden  2xl:ml-0 p-6">
+    <section className="flex-1 xl:flex items-center justify-center  bg-white rounded-xl m-4 hidden  2xl:ml-0 p-6">
       <div className="relative  ">
         <PhoneMockup />
         <div className="absolute  inset-0 flex flex-col items-center  ">

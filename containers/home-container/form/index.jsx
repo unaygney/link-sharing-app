@@ -105,7 +105,7 @@ export default function Form() {
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 mt-4"
+        className="flex flex-col gap-6 mt-4 "
       >
         <ToastContainer />
         <Button
