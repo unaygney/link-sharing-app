@@ -1,25 +1,22 @@
 import React from "react";
-import { verifyJwtToken } from "@/utils/auth";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import CopyButton from "./copy-button";
+import { cookies } from "next/headers";
+import { verifyJwtToken } from "@/utils/auth";
 
 export default async function PreviewHeader({ user }) {
-  const { value: token } = cookies().get("token");
-  const { email } = await verifyJwtToken(token);
+  const tokenCookie = cookies()?.get("token") ?? null;
+  let token;
 
-  let isUserLoggedIn;
-
-  if (!email) {
-    isUserLoggedIn = false;
-  } else {
-    isUserLoggedIn = true;
+  if (tokenCookie) {
+    let { value: token2 } = tokenCookie;
+    token = await verifyJwtToken(token2);
   }
 
   return (
     <>
       <div className="absolute -z-10 hidden md:block rounded-b-[32px]  top-0 left-0 right-0 w-full h-[357px] bg-[#633CFF]"></div>
-      {isUserLoggedIn && (
+      {token && (
         <div className="flex z-20  justify-between gap-4 md:px-6 md:py-4  md:bg-white rounded-xl">
           <Link
             href="/"
